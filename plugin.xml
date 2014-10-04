@@ -9,11 +9,17 @@
 		<clobbers target="bixolonprinter" />
 	</js-module>
 	<platform name="android">
+	    <config-file target="AndroidManifest.xml" parent="/manifest">
+    		<uses-permission android:name="android.permission.BLUETOOTH" />
+    		<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+		</config-file>
+	
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="BixolonPrinter">
 				<param name="android-package" value="com.fit.printer.BixolonPlugin" />
 			</feature>
 		</config-file>
 		<source-file src="src/com/fit/printer/BixolonPlugin.java" target-dir="src/com/fit/printer/" />
+		<source-file src="src/BixolonPrinter.jar" target-dir="libs"/>
 	</platform>
 </plugin>
