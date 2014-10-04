@@ -74,7 +74,7 @@ public class BixolonPlugin extends CordovaPlugin {
 				switch (msg.arg1) {
 				case BixolonPrinter.STATE_CONNECTED:
 					//mIsConnected = true;
-					LOG.i("am", "Connected to bluetooth");
+					//LOG.i("am", "Connected to bluetooth");
 					mBixolonPrinter.formFeed(true);
 					mBixolonPrinter.printText("AM Test\n", 
 							BixolonPrinter.ALIGNMENT_CENTER, 
@@ -84,11 +84,11 @@ public class BixolonPlugin extends CordovaPlugin {
 					break;
 
 				case BixolonPrinter.STATE_CONNECTING:
-					LOG.i("am", "Connecting to bluetooth");
+					//LOG.i("am", "Connecting to bluetooth");
 					break;
 
 				case BixolonPrinter.STATE_NONE:
-					LOG.i("am", "Disconnected to bluetooth");
+					//LOG.i("am", "Disconnected to bluetooth");
 					//mIsConnected = false;
 					break;
 				}
@@ -144,10 +144,10 @@ public class BixolonPlugin extends CordovaPlugin {
 				} else {
 					DialogManager.showBluetoothDialog(this.cordova.getActivity(), (Set<BluetoothDevice>) msg.obj);
 				}*/
-				LOG.i("am", ((Set<BluetoothDevice>) msg.obj).toString());
+				//LOG.i("am", ((Set<BluetoothDevice>) msg.obj).toString());
 				Set<BluetoothDevice> bluetoothDevicesSet = (Set<BluetoothDevice>) msg.obj;
 				for (BluetoothDevice device : bluetoothDevicesSet) {
-					LOG.i("am", device.getName());
+					//LOG.i("am", device.getName());
 					//if(device.getName().equals("SPP-R300")) {
 					//	mBixolonPrinter.connect(device.getAddress());
 					//	
