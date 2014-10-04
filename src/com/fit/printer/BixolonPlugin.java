@@ -64,6 +64,7 @@ public class BixolonPlugin extends CordovaPlugin {
         if (xml != null && xml.length() > 0) {
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     		try {
+            	//mBixolonPrinter.connect((String) null);
     			Log.i(TAG, xml);
     			DocumentBuilder builder = factory.newDocumentBuilder();
     			Document dom = builder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
@@ -78,8 +79,9 @@ public class BixolonPlugin extends CordovaPlugin {
     				String text = item.getTextContent();
     				
     				Log.i(TAG, "size:" + size + " align:" + align + " attribute:" + attribute + " text:"+ text);
-    	        	mBixolonPrinter.printText(text, align, attribute, size, true);
+    	        	mBixolonPrinter.printText(text, align, attribute, size, false);
     			}
+    			mBixolonPrinter.cutPaper(true);
 				mBixolonPrinter.disconnect();
 
     		} catch (Exception e) {
