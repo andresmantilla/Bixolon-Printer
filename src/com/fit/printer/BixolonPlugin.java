@@ -124,7 +124,7 @@ public class BixolonPlugin extends CordovaPlugin {
 							Log.i(TAG, "size:" + size + " align:" + align
 									+ " attribute:" + attribute + " text:"
 									+ text);
-							mBixolonPrinter.printText(text, align, attribute,
+							mBixolonPrinter.printText(text+"\n", align, attribute,
 									size, false);
 						}
 						mBixolonPrinter.cutPaper(true);
