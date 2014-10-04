@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
@@ -57,7 +58,8 @@ public class BixolonPlugin extends CordovaPlugin {
     }
 
     private void print(String xml, CallbackContext callbackContext) {
-        if (xml != null && xml.length() > 0) { 
+        if (xml != null && xml.length() > 0) {
+        	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     		try {
     			DocumentBuilder builder = factory.newDocumentBuilder();
     			Document dom = builder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
@@ -77,7 +79,7 @@ public class BixolonPlugin extends CordovaPlugin {
     		} catch (Exception e) {
     			throw new RuntimeException(e);
     		}
-            callbackContext.success(text);
+            callbackContext.success("OK");
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
