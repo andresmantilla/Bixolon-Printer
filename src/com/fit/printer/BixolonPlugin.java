@@ -68,14 +68,16 @@ public class BixolonPlugin extends CordovaPlugin {
     			for (int i = 0; i < items.getLength(); i++) {
     				Element item = (Element) items.item(i);
     				
-    				int size = (item.getAttribute("size") == null ) ? 0 : Integer.parseInt(item.getAttribute("size"));
-    				int align = (item.getAttribute("align") == null ) ? 0 : Integer.parseInt(item.getAttribute("align"));
-    				int attribute = (item.getAttribute("attribute") == null ) ? 0 : Integer.parseInt(item.getAttribute("attribute"));
+    				int size = (item.getAttribute("size") == null || "".equals(item.getAttribute("size"))) ? 0 : Integer.parseInt(item.getAttribute("size"));
+    				int align = (item.getAttribute("align") == null || "".equals(item.getAttribute("align")) ) ? 0 : Integer.parseInt(item.getAttribute("align"));
+    				int attribute = (item.getAttribute("attribute") == null || "".equals(item.getAttribute("attribute")) ) ? 0 : Integer.parseInt(item.getAttribute("attribute"));
     				String text = item.getTextContent();
     				
     				//System.out.println("size:" + size + " align:" + align + " attribute:" + attribute + " text:"+ text);
     	        	mBixolonPrinter.printText(text, align, attribute, size, true);
     			}
+				mBixolonPrinter.disconnect();
+
     		} catch (Exception e) {
     			throw new RuntimeException(e);
     		}
@@ -98,12 +100,12 @@ public class BixolonPlugin extends CordovaPlugin {
 				case BixolonPrinter.STATE_CONNECTED:
 					//mIsConnected = true;
 					//LOG.i("am", "Connected to bluetooth");
-					mBixolonPrinter.formFeed(true);
+					/*mBixolonPrinter.formFeed(true);
 					mBixolonPrinter.printText("AM Test\n", 
 							BixolonPrinter.ALIGNMENT_CENTER, 
 							BixolonPrinter.TEXT_ATTRIBUTE_FONT_A, 
 							BixolonPrinter.TEXT_SIZE_HORIZONTAL1 | BixolonPrinter.TEXT_SIZE_VERTICAL1, 
-							true);
+							true);*/
 					break;
 
 				case BixolonPrinter.STATE_CONNECTING:
@@ -182,7 +184,6 @@ public class BixolonPlugin extends CordovaPlugin {
 				
 			case BixolonPrinter.MESSAGE_PRINT_COMPLETE:
 				//Toast.makeText(getApplicationContext(), "Complete to print", Toast.LENGTH_SHORT).show();
-				mBixolonPrinter.disconnect();
 				return true;
 				
 			case BixolonPrinter.MESSAGE_ERROR_INVALID_ARGUMENT:
