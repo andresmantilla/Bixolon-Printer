@@ -22,10 +22,13 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
 
 import com.bixolon.printer.BixolonPrinter;
 
 public class BixolonPlugin extends CordovaPlugin {
+	protected static final String TAG = "BixolonPlugin";
 	static BixolonPrinter mBixolonPrinter;
 	
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -61,6 +64,7 @@ public class BixolonPlugin extends CordovaPlugin {
         if (xml != null && xml.length() > 0) {
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     		try {
+    			Log.i(TAG, xml);
     			DocumentBuilder builder = factory.newDocumentBuilder();
     			Document dom = builder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
     			Element root = dom.getDocumentElement();
@@ -79,6 +83,7 @@ public class BixolonPlugin extends CordovaPlugin {
 				mBixolonPrinter.disconnect();
 
     		} catch (Exception e) {
+    			Log.i(TAG, e.getMessage());
     			throw new RuntimeException(e);
     		}
             callbackContext.success("OK");
@@ -92,14 +97,14 @@ public class BixolonPlugin extends CordovaPlugin {
 		@SuppressWarnings("unchecked")
 		@Override
 		public boolean handleMessage(Message msg) {
-			//Log.d(TAG, "mHandler.handleMessage(" + msg + ")");
+			Log.d(TAG, "mHandler.handleMessage(" + msg + ")");
 			
 			switch (msg.what) {
 			case BixolonPrinter.MESSAGE_STATE_CHANGE:
 				switch (msg.arg1) {
 				case BixolonPrinter.STATE_CONNECTED:
 					//mIsConnected = true;
-					//LOG.i("am", "Connected to bluetooth");
+					Log.i(TAG, "Connected to bluetooth");
 					/*mBixolonPrinter.formFeed(true);
 					mBixolonPrinter.printText("AM Test\n", 
 							BixolonPrinter.ALIGNMENT_CENTER, 
@@ -109,11 +114,11 @@ public class BixolonPlugin extends CordovaPlugin {
 					break;
 
 				case BixolonPrinter.STATE_CONNECTING:
-					//LOG.i("am", "Connecting to bluetooth");
+					Log.i(TAG, "Connecting to bluetooth");
 					break;
 
 				case BixolonPrinter.STATE_NONE:
-					//LOG.i("am", "Disconnected to bluetooth");
+					Log.i(TAG, "Disconnected to bluetooth");
 					//mIsConnected = false;
 					break;
 				}
