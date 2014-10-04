@@ -30,6 +30,7 @@ import com.bixolon.printer.BixolonPrinter;
 public class BixolonPlugin extends CordovaPlugin {
 	protected static final String TAG = "BixolonPlugin";
 	static BixolonPrinter mBixolonPrinter;
+	private boolean mIsConnected;
 	
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
@@ -64,7 +65,11 @@ public class BixolonPlugin extends CordovaPlugin {
         if (xml != null && xml.length() > 0) {
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     		try {
-            	//mBixolonPrinter.connect((String) null);
+    			if(!mIsConnected) {
+    				Log.i(TAG, "Not connected, trying to connect again");
+    				mBixolonPrinter.connect((String) null);
+    			}
+    			
     			Log.i(TAG, xml);
     			DocumentBuilder builder = factory.newDocumentBuilder();
     			Document dom = builder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
@@ -105,7 +110,7 @@ public class BixolonPlugin extends CordovaPlugin {
 			case BixolonPrinter.MESSAGE_STATE_CHANGE:
 				switch (msg.arg1) {
 				case BixolonPrinter.STATE_CONNECTED:
-					//mIsConnected = true;
+					mIsConnected = true;
 					Log.i(TAG, "Connected to bluetooth");
 					/*mBixolonPrinter.formFeed(true);
 					mBixolonPrinter.printText("AM Test\n", 
@@ -121,7 +126,7 @@ public class BixolonPlugin extends CordovaPlugin {
 
 				case BixolonPrinter.STATE_NONE:
 					Log.i(TAG, "Disconnected to bluetooth");
-					//mIsConnected = false;
+					mIsConnected = false;
 					break;
 				}
 				return true;
@@ -179,7 +184,7 @@ public class BixolonPlugin extends CordovaPlugin {
 				//LOG.i("am", ((Set<BluetoothDevice>) msg.obj).toString());
 				Set<BluetoothDevice> bluetoothDevicesSet = (Set<BluetoothDevice>) msg.obj;
 				for (BluetoothDevice device : bluetoothDevicesSet) {
-					//LOG.i("am", device.getName());
+					Log.i(TAG, device.getName());
 					//if(device.getName().equals("SPP-R300")) {
 					//	mBixolonPrinter.connect(device.getAddress());
 					//	
