@@ -34,7 +34,7 @@ public class BixolonPlugin extends CordovaPlugin {
 	
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        //LOG.i("am", "Bixolon Printer bluetooth");
+        Log.i("am", "Bixolon Printer bluetooth");
 		mBixolonPrinter = new BixolonPrinter(this.cordova.getActivity().getApplicationContext(), mHandler, null);
 	}
     
