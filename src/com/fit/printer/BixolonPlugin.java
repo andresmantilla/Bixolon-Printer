@@ -1,6 +1,10 @@
 package com.fit.printer;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
+
+import javax.xml.parsers.DocumentBuilder;
 
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
@@ -9,6 +13,9 @@ import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
@@ -49,13 +56,27 @@ public class BixolonPlugin extends CordovaPlugin {
         }
     }
 
-    private void print(String text, CallbackContext callbackContext) {
-        if (text != null && text.length() > 0) { 
-        	mBixolonPrinter.printText("AM Test\n", 
-					BixolonPrinter.ALIGNMENT_CENTER, 
-					BixolonPrinter.TEXT_ATTRIBUTE_FONT_A, 
-					BixolonPrinter.TEXT_SIZE_HORIZONTAL1 | BixolonPrinter.TEXT_SIZE_VERTICAL1, 
-					true);
+    private void print(String xml, CallbackContext callbackContext) {
+        if (xml != null && xml.length() > 0) { 
+    		try {
+    			DocumentBuilder builder = factory.newDocumentBuilder();
+    			Document dom = builder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+    			Element root = dom.getDocumentElement();
+    			NodeList items = root.getElementsByTagName("font");
+    			for (int i = 0; i < items.getLength(); i++) {
+    				Element item = (Element) items.item(i);
+    				
+    				String size = item.getAttribute("size");
+    				String align = item.getAttribute("align");
+    				String attribute = item.getAttribute("attribute");
+    				String text = item.getTextContent();
+    				
+    				//System.out.println("size:" + size + " align:" + align + " attribute:" + attribute + " text:"+ text);
+    	        	mBixolonPrinter.printText(text, align, attribute, size, true);
+    			}
+    		} catch (Exception e) {
+    			throw new RuntimeException(e);
+    		}
             callbackContext.success(text);
         } else {
             callbackContext.error("Expected one non-empty string argument.");
