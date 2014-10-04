@@ -68,9 +68,9 @@ public class BixolonPlugin extends CordovaPlugin {
     			for (int i = 0; i < items.getLength(); i++) {
     				Element item = (Element) items.item(i);
     				
-    				String size = item.getAttribute("size");
-    				String align = item.getAttribute("align");
-    				String attribute = item.getAttribute("attribute");
+    				int size = (item.getAttribute("size") == null ) ? 0 : Integer.parseInt(item.getAttribute("size"));
+    				int align = (item.getAttribute("align") == null ) ? 0 : Integer.parseInt(item.getAttribute("align"));
+    				int attribute = (item.getAttribute("attribute") == null ) ? 0 : Integer.parseInt(item.getAttribute("attribute"));
     				String text = item.getTextContent();
     				
     				//System.out.println("size:" + size + " align:" + align + " attribute:" + attribute + " text:"+ text);
