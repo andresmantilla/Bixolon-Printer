@@ -77,7 +77,7 @@ public class BixolonPlugin extends CordovaPlugin {
     				int attribute = (item.getAttribute("attribute") == null || "".equals(item.getAttribute("attribute")) ) ? 0 : Integer.parseInt(item.getAttribute("attribute"));
     				String text = item.getTextContent();
     				
-    				//System.out.println("size:" + size + " align:" + align + " attribute:" + attribute + " text:"+ text);
+    				Log.i(TAG, "size:" + size + " align:" + align + " attribute:" + attribute + " text:"+ text);
     	        	mBixolonPrinter.printText(text, align, attribute, size, true);
     			}
 				mBixolonPrinter.disconnect();
