@@ -7,15 +7,15 @@ var argscheck = require('cordova/argscheck'),
 function BixolonPrinter () {
 }
 
-BixolonPrinter.prototype.connect = function (str, callback) {
+/*BixolonPrinter.prototype.connect = function (str, callback) {
     exec(callback, function(err) {
         callback('Nothing to echo.');
     }, "BixolonPrinter", "connect", [str]);
-}
+}*/
 
 BixolonPrinter.prototype.print = function (str, callback) {
     exec(callback, function(err) {
-        callback('Nothing to echo.');
+        callback('Nothing to print.');
     }, "BixolonPrinter", "print", [str]);
 }
 

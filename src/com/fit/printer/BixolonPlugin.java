@@ -42,11 +42,7 @@ public class BixolonPlugin extends CordovaPlugin {
 	@Override
 	public boolean execute(String action, JSONArray args,
 			CallbackContext callbackContext) throws JSONException {
-		if (action.equals("connect")) {
-			String message = args.getString(0);
-			this.connect(message, callbackContext);
-			return true;
-		} else if (action.equals("print")) {
+		if (action.equals("print")) {
 			String message = args.getString(0);
 			this.print(message, callbackContext);
 			return true;
